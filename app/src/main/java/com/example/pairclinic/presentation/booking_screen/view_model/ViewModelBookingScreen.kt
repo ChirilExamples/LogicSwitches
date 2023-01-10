@@ -72,6 +72,5 @@ class ViewModelBookingScreen @Inject constructor() : ViewModel() {
                 it.copy(checkboxCounterReserved = 0)
             }
         }
-
     }
 }

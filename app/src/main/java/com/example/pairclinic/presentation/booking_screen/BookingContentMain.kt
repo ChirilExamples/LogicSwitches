@@ -1,5 +1,6 @@
 package com.example.pairclinic.presentation.booking_screen
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,18 +20,22 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pairclinic.presentation.booking_screen.view_model.ViewModelBookingScreen
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ContentMain(viewModel: ViewModelBookingScreen) {
 
+    val counterReserved = viewModel.uiState.value.checkboxCounterReserved
+    val counterNotReserved = viewModel.uiState.value.checkboxCounterNotReserved
     Column {
         Spacer(modifier = Modifier.height(20.dp))
-        CatHeader(text = "These Guests Have Reservations")
+        CatHeader(text = "These Guests Have Reservations", viewModel = viewModel)
         Spacer(modifier = Modifier.height(5.dp))
         LazyColumnReserved(0.45f, viewModel)
         Spacer(modifier = Modifier.height(18.dp))
-        CatHeader(text = "These Guests Need Reservations")
+        CatHeader(text = "These Guests Need Reservations", viewModel = viewModel)
         Spacer(modifier = Modifier.height(5.dp))
         LazyColumnNotReserved(1f, viewModel)
 
@@ -42,13 +47,17 @@ fun ContentMain(viewModel: ViewModelBookingScreen) {
 
 
 @Composable
-fun CatHeader(text: String) {
+fun CatHeader(text: String, viewModel: ViewModelBookingScreen) {
     Text(text = text,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         modifier = Modifier
             .padding(horizontal = 10.dp)
-            .semantics { heading() })
+            .semantics { heading() }
+            .clearAndSetSemantics {
+                contentDescription =
+                    "List of guests who have a reservation"
+            })
 }
 
 @Composable

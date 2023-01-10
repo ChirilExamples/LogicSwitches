@@ -7,17 +7,3 @@ fun DummyNames(): DataStructure {
         "Kyree Ridgeway",
     )
 }
-
-
-//listOf<>(
-//"Kyree Ridgeway",
-//"Rebeca Wilhelm",
-//"Tierra Peyton",
-//"Gabriel Hebert",
-//"Ibrahim Burdick",
-//"Helen Weiner",
-//"Marvin Batchelor",
-//"Kiera Pollard",
-//"Truman Kessler",
-//"Ammon Portillo"
-//)
