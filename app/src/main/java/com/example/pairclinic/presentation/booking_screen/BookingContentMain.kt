@@ -148,7 +148,7 @@ fun LazyColumnNotReserved(size: Float, viewmodel: ViewModelBookingScreen) {
                         }
                         Log.i(
                             "checkboxCounterReserved",
-                            viewmodel.uiState.value.checkboxCounterReserved.toString()
+                            viewmodel.uiState.value.checkboxCounterNotReserved.toString()
                         )
                     })
             ) {
@@ -161,7 +161,7 @@ fun LazyColumnNotReserved(size: Float, viewmodel: ViewModelBookingScreen) {
                     }
                     Log.i(
                         "checkboxCounterReserved",
-                        viewmodel.uiState.value.checkboxCounterReserved.toString()
+                        viewmodel.uiState.value.checkboxCounterNotReserved.toString()
                     )
                 })
                 Text(
@@ -171,4 +171,3 @@ fun LazyColumnNotReserved(size: Float, viewmodel: ViewModelBookingScreen) {
         })
     }
 }
-

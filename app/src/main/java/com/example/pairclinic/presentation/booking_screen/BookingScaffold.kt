@@ -4,21 +4,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.activity.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pairclinic.presentation.booking_screen.view_model.ViewModelBookingScreen
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph(start = true)
 @Destination
 @Composable
-fun ToDisplayScaffold (viewModel: ViewModelBookingScreen) {
+fun ToDisplayScaffold(
+    viewModel: ViewModelBookingScreen = hiltViewModel(),
+    navigator: DestinationsNavigator
+) {
     Scaffold(
         topBar = {
             BookingAppBar()
@@ -32,10 +32,9 @@ fun ToDisplayScaffold (viewModel: ViewModelBookingScreen) {
             }
         },
         bottomBar = {
-            BookingBottomBarContent(viewModel)
+            BookingBottomBarContent(viewModel, navigator)
+            ReservationNeeded(viewModel)
         }
     )
-    ReservationNeeded(viewModel)
-
-
+//    ReservationNeeded(viewModel)
 }

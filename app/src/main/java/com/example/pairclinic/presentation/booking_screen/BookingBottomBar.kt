@@ -18,10 +18,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pairclinic.presentation.booking_screen.view_model.ViewModelBookingScreen
+import com.example.pairclinic.presentation.destinations.ConfirmationScreenDestination
+import com.example.pairclinic.presentation.destinations.ConflictScreenDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun BookingBottomBarContent(viewModel: ViewModelBookingScreen) {
+fun BookingBottomBarContent(viewModel: ViewModelBookingScreen, navigator: DestinationsNavigator) {
 
     BottomAppBar(
         modifier = Modifier
@@ -31,28 +34,31 @@ fun BookingBottomBarContent(viewModel: ViewModelBookingScreen) {
 
         val uiState by viewModel.uiState.collectAsState()
 
-        val state = remember { mutableStateOf(uiState.snackBarStateBooking).value }
-
-
         Column {
             val context = LocalContext.current
             Achtung()
             Button(
                 onClick = {
-                    if (uiState.checkboxCounterReserved != 0) {
+                    if (uiState.checkboxCounterReserved != 0 && uiState.checkboxCounterNotReserved != 0) {
+                        navigator.navigate(ConflictScreenDestination)
+                        Toast.makeText(context, " To Conflict Screen", Toast.LENGTH_SHORT)
+                            .show()
+                        viewModel.resetValues()
+                    } else if (uiState.checkboxCounterReserved != 0) {
+                        navigator.navigate(ConfirmationScreenDestination)
                         Toast.makeText(context, " To Confirmation Screen", Toast.LENGTH_SHORT)
                             .show()
-                    }else if (uiState.checkboxCounterReserved == 0){
+                        viewModel.resetValues()
+                    } else if (uiState.checkboxCounterReserved == 0) {
                         viewModel.snackAppear()
                     }
+
                 },
                 shape = RoundedCornerShape(25.dp),
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .fillMaxWidth(),
-                enabled = (
-                        (uiState.checkboxCounterNotReserved > 0) || (uiState.checkboxCounterReserved > 0)
-                        )
+                enabled = ((uiState.checkboxCounterNotReserved > 0) || (uiState.checkboxCounterReserved > 0))
             ) {
                 Text(text = "Continue", fontSize = 16.sp)
             }

@@ -12,12 +12,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookingAppBar(){
+fun BookingAppBar() {
     TopAppBar(
         modifier = Modifier
             .shadow(2.dp)
@@ -49,7 +48,7 @@ fun BookingAppBar(){
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
-                    )
+                )
             }
         },
     )

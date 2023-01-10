@@ -8,6 +8,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
 @Composable
-fun ConflictScreen(){
+fun ConflictScreen() {
     Text(text = "Conflict Screen", fontSize = 25.sp, textAlign = TextAlign.Center)
 }

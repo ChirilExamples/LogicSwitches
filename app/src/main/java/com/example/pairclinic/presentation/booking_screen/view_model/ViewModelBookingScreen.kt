@@ -6,8 +6,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class ViewModelBookingScreen : ViewModel() {
+@HiltViewModel
+class ViewModelBookingScreen @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -15,7 +17,7 @@ class ViewModelBookingScreen : ViewModel() {
     fun addToNotRes() {
         uiState.value.checkboxCounterNotReserved++
         if (uiState.value.checkboxCounterNotReserved > 0) {
-            _uiState.update { it.copy(guestNeedReservation = true) }
+            _uiState.update { it.copy(checkboxCounterNotReserved = uiState.value.checkboxCounterNotReserved++) }
         }
     }
 
@@ -23,7 +25,7 @@ class ViewModelBookingScreen : ViewModel() {
 
         uiState.value.checkboxCounterNotReserved--
         if (uiState.value.checkboxCounterNotReserved == 0) {
-            _uiState.update { it.copy(guestNeedReservation = false) }
+            _uiState.update { it.copy(checkboxCounterNotReserved = uiState.value.checkboxCounterNotReserved--) }
         }
 
     }
@@ -31,7 +33,7 @@ class ViewModelBookingScreen : ViewModel() {
     fun addToRes() {
         uiState.value.checkboxCounterReserved++
         if (uiState.value.checkboxCounterReserved > 0) {
-            _uiState.update { it.copy(guestHaveReservation = true) }
+            _uiState.update { it.copy(checkboxCounterReserved = uiState.value.checkboxCounterReserved++) }
         }
     }
 
@@ -39,10 +41,11 @@ class ViewModelBookingScreen : ViewModel() {
 
         uiState.value.checkboxCounterReserved--
         if (uiState.value.checkboxCounterReserved == 0) {
-            _uiState.update { it.copy(guestHaveReservation = false) }
+            _uiState.update { it.copy(checkboxCounterReserved = uiState.value.checkboxCounterReserved--) }
         }
 
     }
+
     fun snackAppear() {
 
         if (!uiState.value.snackBarStateBooking) {
@@ -59,4 +62,16 @@ class ViewModelBookingScreen : ViewModel() {
 
     }
 
+    fun resetValues() {
+        uiState.value.checkboxCounterReserved = 0
+        uiState.value.checkboxCounterNotReserved = 0
+
+        if (uiState.value.checkboxCounterNotReserved > 0) {
+            _uiState.update {
+                it.copy(checkboxCounterNotReserved = 0)
+                it.copy(checkboxCounterReserved = 0)
+            }
+        }
+
+    }
 }

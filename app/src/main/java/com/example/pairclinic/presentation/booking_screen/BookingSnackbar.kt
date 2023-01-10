@@ -6,8 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -15,11 +20,9 @@ import com.example.pairclinic.presentation.booking_screen.view_model.ViewModelBo
 
 @Composable
 fun ReservationNeeded(viewModel: ViewModelBookingScreen) {
-    Column(verticalArrangement = Arrangement.Bottom,) {
+    Column(verticalArrangement = Arrangement.Bottom) {
 
         val uiState by viewModel.uiState.collectAsState()
-        val snackBarVisibleState =
-            remember { mutableStateOf(viewModel.uiState.value.snackBarStateBooking) }
 
 //        Button(
 //            onClick = {
